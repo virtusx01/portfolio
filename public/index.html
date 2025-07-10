@@ -1,89 +1,202 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.10.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.10.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.10.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Muhammad Nur Fauzan</title>
+    <style>
+        /* Gaya dasar untuk portofolio Anda */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
-      });
-    </script>
-  </body>
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77aaff 3px solid;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+        header p {
+            margin: 0;
+            padding-bottom: 20px;
+            font-size: 1.1em;
+        }
+        section {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #77aaff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        .project-item {
+            margin-bottom: 20px;
+            border-left: 5px solid #77aaff;
+            padding-left: 15px;
+        }
+        .project-item h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        .project-item p {
+            margin-bottom: 5px;
+        }
+        .project-item a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .project-item a:hover {
+            text-decoration: underline;
+        }
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .skill-item {
+            background: #e2e6ea;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: #fff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            [cite_start]<h1>MUHAMMAD NUR FAUZAN</h1> [cite: 1]
+            [cite_start]<p>IT MOBILE & WEB DEVELOPER</p> [cite: 2]
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            [cite_start]<h2>Tentang Saya</h2> [cite: 28]
+            [cite_start]<p>Saya adalah orang yang gigih[cite: 3]. [cite_start]Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dalam pengembangan aplikasi seluler dan web.</p> [cite: 29]
+            [cite_start]<p><strong>Email:</strong> muhammadnurfauzann88@gmail.com</p> [cite: 40]
+            [cite_start]<p><strong>Telepon:</strong> +6281574422949</p> [cite: 41]
+            [cite_start][cite: 42]
+        </section>
+
+        <section id="education">
+            [cite_start]<h2>Pendidikan</h2> [cite: 4]
+            <ul>
+                <li>
+                    [cite_start]<strong>UNIVERSITAS BINA SARANA INFORMATIKA</strong> (2022 - sekarang) [cite: 5]
+                    [cite_start]<br>Sarjana Teknologi Informasi (GPA: 4/4) [cite: 6, 16]
+                </li>
+                <li>
+                    [cite_start]<strong>SMAN 31 JAKARTA</strong> (2018-2021) [cite: 7, 8]
+                </li>
+                <li>
+                    [cite_start]<strong>SMPN 74 JAKARTA</strong> (2015-2018) [cite: 9, 10]
+                </li>
+                <li>
+                    [cite_start]<strong>SDN 09 RAWAMANGUN</strong> (2009-2015) [cite: 11, 12]
+                </li>
+            </ul>
+        </section>
+
+        <section id="experience">
+            [cite_start]<h2>Pengalaman Proyek</h2> [cite: 13]
+
+            <div class="project-item">
+                [cite_start]<h3>BOOKING CABIN WEBSITE LARAVEL</h3> [cite: 14]
+                [cite_start]<p>April - Juni 2025</p> [cite: 15]
+                <p>Mengembangkan situs web pemesanan kabin menggunakan Laravel. [cite_start]Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci).</p> [cite: 17]
+                [cite_start]<p>Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud.</p> [cite: 18]
+                <p>Link Proyek: <a href="[URL_PROYEK_BOOKING_CABIN]" target="_blank">Lihat Proyek</a></p>
+            </div>
+
+            <div class="project-item">
+                [cite_start]<h3>EMPLOYEE ABSENCE MOBILE APP</h3> [cite: 19]
+                [cite_start]<p>Maret - April 2025</p> [cite: 20]
+                <p>Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. [cite_start]Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna.</p> [cite: 21, 22]
+                <p>Link Proyek: <a href="[URL_PROYEK_ABSENSI_MOBILE]" target="_blank">Lihat Proyek</a></p>
+            </div>
+
+            <div class="project-item">
+                [cite_start]<h3>WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES</h3> [cite: 23]
+                [cite_start]<p>Oktober - Desember 2024</p> [cite: 24]
+                <p>Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. [cite_start]Menggunakan Forward Chaining dan Certainty Factor.</p> [cite: 25, 26]
+                <p>Link Proyek: <a href="[URL_PROYEK_SISTEM_PAKAR]" target="_blank">Lihat Proyek</a></p>
+            </div>
+        </section>
+
+        <section id="skills">
+            [cite_start]<h2>Keahlian</h2> [cite: 30]
+            [cite_start]<h3>Bahasa Pemrograman:</h3> [cite: 27]
+            <div class="skills-list">
+                [cite_start]<span class="skill-item">HTML</span> [cite: 31]
+                [cite_start]<span class="skill-item">CSS</span> [cite: 31]
+                [cite_start]<span class="skill-item">JavaScript</span> [cite: 31]
+                [cite_start]<span class="skill-item">PHP</span> [cite: 31]
+                [cite_start]<span class="skill-item">Dart</span> [cite: 31]
+            </div>
+            <h3>Framework/Library:</h3>
+            <div class="skills-list">
+                [cite_start]<span class="skill-item">Laravel</span> [cite: 32]
+                [cite_start]<span class="skill-item">Next.JS</span> [cite: 32]
+                [cite_start]<span class="skill-item">Flutter</span> [cite: 32]
+            </div>
+            <h3>Database:</h3>
+            <div class="skills-list">
+                [cite_start]<span class="skill-item">MySQL</span> [cite: 34]
+                [cite_start]<span class="skill-item">Firebase Firestore</span> [cite: 34]
+                [cite_start]<span class="skill-item">PostgreSQL</span> [cite: 34]
+            </div>
+            <h3>Lain-lain:</h3>
+            <div class="skills-list">
+                [cite_start]<span class="skill-item">Flow Diagram</span> [cite: 33]
+                [cite_start]<span class="skill-item">Git</span> [cite: 35]
+            </div>
+        </section>
+
+        <section id="soft-skills">
+            [cite_start]<h2>Soft Skill</h2> [cite: 36]
+            <ul>
+                [cite_start]<li>Kerja Sama Tim yang Baik</li> [cite: 37]
+                [cite_start]<li>Berpikir Kritis & Pemecahan Masalah</li> [cite: 38]
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi.</p>
+    </footer>
+</body>
 </html>
