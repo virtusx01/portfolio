@@ -1,202 +1,643 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" id="portfolio-html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio - Muhammad Nur Fauzan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Gaya dasar untuk portofolio Anda */
+        /* Variabel CSS untuk kemudahan perubahan tema monokrom */
+        :root {
+            --primary-text: #212121;
+            --secondary-text: #555555;
+            --background-light: #f5f5f5;
+            --background-dark: #1a1a1a;
+            --card-background: #ffffff;
+            --border-color: #e0e0e0;
+            --accent-line: #9e9e9e; /* Sedikit aksen abu-abu */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Gaya Dasar */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: var(--background-light);
+            color: var(--primary-text);
+            overflow-x: hidden;
         }
+
         .container {
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
             margin: auto;
-            overflow: hidden;
-            padding: 20px 0;
+            padding: 40px 0;
         }
+
+        /* Header / Hero Section */
         header {
-            background: #333;
-            color: #fff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #77aaff 3px solid;
+            background-color: var(--background-dark);
+            color: var(--background-light);
+            padding: 80px 0 60px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--background-light);
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeInScale 1s ease-out;
+        }
+
         header h1 {
-            margin: 0;
-            padding-bottom: 10px;
+            margin: 0 0 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s ease-out;
         }
+
         header p {
             margin: 0;
-            padding-bottom: 20px;
-            font-size: 1.1em;
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease-out;
         }
+
+        /* Tombol Translate */
+        .translate-button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .translate-button {
+            background-color: var(--background-light);
+            color: var(--primary-text);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .translate-button:hover {
+            background-color: var(--primary-text);
+            color: var(--background-light);
+            transform: translateY(-2px);
+        }
+
+        /* Bagian Umum (Section) */
         section {
-            padding: 20px;
-            margin-bottom: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 60px 0;
+            margin-bottom: 30px;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            transition: transform 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
         }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:last-of-type {
+            margin-bottom: 0;
+        }
+
         h2 {
-            color: #333;
-            border-bottom: 2px solid #77aaff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            color: var(--primary-text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
         }
-        ul {
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-line);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        #about p {
+            font-size: 1.1em;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: var(--secondary-text);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-info p {
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-text);
+            /* --- Perbaikan untuk email panjang --- */
+            word-break: break-all; /* Memaksa pemecahan kata jika terlalu panjang */
+            /* atau bisa juga: overflow-wrap: break-word; */
+            /* --- Akhir Perbaikan --- */
+        }
+        .contact-info p strong {
+            color: var(--secondary-text);
+        }
+
+        /* Education Section */
+        #education ul {
             list-style: none;
             padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        ul li {
-            margin-bottom: 10px;
+
+        #education ul li {
+            background: var(--background-light);
+            padding: 20px 30px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent-line);
+            transition: all 0.3s ease;
+            color: var(--primary-text);
         }
-        .project-item {
-            margin-bottom: 20px;
-            border-left: 5px solid #77aaff;
-            padding-left: 15px;
+
+        #education ul li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        .project-item h3 {
-            margin-top: 0;
-            color: #0056b3;
+
+        #education ul li strong {
+            color: var(--primary-text);
+            font-size: 1.2em;
         }
-        .project-item p {
+
+        #education ul li br {
+            margin-top: 5px;
             margin-bottom: 5px;
         }
+
+        /* Project Experience */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .project-item {
+            background: var(--background-light);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: var(--primary-text);
+        }
+
+        .project-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .project-item h3 {
+            margin-top: 0;
+            color: var(--primary-text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .project-item p {
+            margin-bottom: 15px;
+            flex-grow: 1;
+            color: var(--secondary-text);
+        }
+
+        .project-item .project-date {
+            font-size: 0.9em;
+            color: var(--secondary-text);
+            margin-bottom: 10px;
+            display: block;
+        }
+
         .project-item a {
-            color: #007bff;
+            display: inline-block;
+            background-color: var(--primary-text); /* Tombol gelap */
+            color: var(--background-light); /* Teks terang */
+            padding: 10px 20px;
+            border-radius: 5px;
             text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            align-self: flex-start;
         }
+
         .project-item a:hover {
-            text-decoration: underline;
+            background-color: var(--secondary-text);
+            transform: translateY(-2px);
         }
+
+        /* Skills Section */
+        .skills-category {
+            margin-bottom: 30px;
+        }
+
+        .skills-category h3 {
+            font-size: 1.8em;
+            color: var(--primary-text);
+            font-family: 'Montserrat', sans-serif;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         .skills-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
         }
+
         .skill-item {
-            background: #e2e6ea;
-            padding: 8px 15px;
-            border-radius: 5px;
+            background: var(--border-color);
+            color: var(--primary-text);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
+
+        .skill-item:hover {
+            background-color: var(--secondary-text);
+            color: var(--background-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Soft Skills Section */
+        #soft-skills ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #soft-skills ul li {
+            background: var(--background-light);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--primary-text);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        #soft-skills ul li:hover {
+            background-color: var(--primary-text);
+            color: var(--background-light);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px var(--shadow-hover);
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
-            background: #333;
-            color: #fff;
-            margin-top: 20px;
+            padding: 30px;
+            background: var(--background-dark);
+            color: var(--background-light);
+            margin-top: 50px;
+            font-size: 0.9em;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px 0;
+            }
+
+            header {
+                padding: 60px 0 40px;
+            }
+
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            header p {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            section {
+                padding: 30px 15px;
+            }
+
+            .skills-list {
+                justify-content: flex-start;
+            }
+
+            .skill-item {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
     <header>
+        <div class="translate-button-container">
+            <button id="translateButton" class="translate-button">English</button>
+        </div>
         <div class="container">
-            [cite_start]<h1>MUHAMMAD NUR FAUZAN</h1> [cite: 1]
-            [cite_start]<p>IT MOBILE & WEB DEVELOPER</p> [cite: 2]
+            <img src="profile.webp" alt="Muhammad Nur Fauzan Profile Picture" class="profile-img">
+            <h1>MUHAMMAD NUR FAUZAN</h1>
+            <p data-lang-id="JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER" data-lang-en="JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER">JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER</p>
         </div>
     </header>
 
     <div class="container">
         <section id="about">
-            [cite_start]<h2>Tentang Saya</h2> [cite: 28]
-            [cite_start]<p>Saya adalah orang yang gigih[cite: 3]. [cite_start]Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dalam pengembangan aplikasi seluler dan web.</p> [cite: 29]
-            [cite_start]<p><strong>Email:</strong> muhammadnurfauzann88@gmail.com</p> [cite: 40]
-            [cite_start]<p><strong>Telepon:</strong> +6281574422949</p> [cite: 41]
-            [cite_start][cite: 42]
+            <h2 data-lang-id="Tentang Saya" data-lang-en="About Me">Tentang Saya</h2>
+            <p data-lang-id="Saya adalah seorang individu yang gigih dan berdedikasi. Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dan pengalaman dalam pengembangan aplikasi seluler dan web." data-lang-en="I am a driven and dedicated individual. Born in Jakarta on July 15, 2002. With an educational background in Information Technology, I have a strong interest and experience in full-stack website and mobile development.">Saya adalah seorang individu yang gigih dan berdedikasi. Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dan pengalaman dalam pengembangan aplikasi seluler dan web.</p>
+            <div class="contact-info">
+                <p><strong>Email:</strong> muhammadnurfauzann88@gmail.com</p>
+                <p><strong>Telepon:</strong> +6281574422949</p>
+                <p><strong>Github:</strong> github.com/virtusx01</p>
+                <p><strong>Linkedin:</strong> linkedin.com/in/mnfauzan</p>
+            </div>
         </section>
 
         <section id="education">
-            [cite_start]<h2>Pendidikan</h2> [cite: 4]
+            <h2 data-lang-id="Pendidikan" data-lang-en="Education">Pendidikan</h2>
             <ul>
                 <li>
-                    [cite_start]<strong>UNIVERSITAS BINA SARANA INFORMATIKA</strong> (2022 - sekarang) [cite: 5]
-                    [cite_start]<br>Sarjana Teknologi Informasi (GPA: 4/4) [cite: 6, 16]
+                    <strong>UNIVERSITAS BINA SARANA INFORMATIKA</strong> (2022 - sekarang)
+                    <br><span data-lang-id="Sarjana Teknologi Informasi (GPA: 4/4)" data-lang-en="Bachelor of Information Technology (GPA: 4/4)">Sarjana Teknologi Informasi (GPA: 4/4)</span>
                 </li>
                 <li>
-                    [cite_start]<strong>SMAN 31 JAKARTA</strong> (2018-2021) [cite: 7, 8]
+                    <strong>SMAN 31 JAKARTA</strong> (2018-2021)
                 </li>
                 <li>
-                    [cite_start]<strong>SMPN 74 JAKARTA</strong> (2015-2018) [cite: 9, 10]
+                    <strong>SMPN 74 JAKARTA</strong> (2015-2018)
                 </li>
                 <li>
-                    [cite_start]<strong>SDN 09 RAWAMANGUN</strong> (2009-2015) [cite: 11, 12]
+                    <strong>SDN 09 RAWAMANGUN</strong> (2009-2015)
                 </li>
             </ul>
         </section>
 
         <section id="experience">
-            [cite_start]<h2>Pengalaman Proyek</h2> [cite: 13]
+            <h2 data-lang-id="Pengalaman Proyek" data-lang-en="Project Experience">Pengalaman Proyek</h2>
+            <div class="project-grid">
+                <div class="project-item">
+                    <h3 data-lang-id="BOOKING CABIN WEBSITE LARAVEL" data-lang-en="BOOKING CABIN WEBSITE LARAVEL">BOOKING CABIN WEBSITE LARAVEL</h3>
+                    <span class="project-date" data-lang-id="April - Juni 2025" data-lang-en="April - June 2025">April - Juni 2025</span>
+                    <p data-lang-id="Mengembangkan situs web pemesanan kabin menggunakan Laravel. Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, dan sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci). Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud." data-lang-en="Developed a cabin booking website using Laravel. Implemented features such as user authentication system, cabin gallery, availability checking, booking form, Midtrans as a payment API, and a QR-code system for confirmation to employees (key handover). The project uses Git for version control and is hosted on Laravel Cloud.">Mengembangkan situs web pemesanan kabin menggunakan Laravel. Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, dan sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci). Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud.</p>
+                    <a href="https://cabinskuy-web-main-afr568.laravel.cloud" target="_blank" data-lang-id="Lihat Proyek" data-lang-en="View Project">Lihat Proyek</a>
+                </div>
 
-            <div class="project-item">
-                [cite_start]<h3>BOOKING CABIN WEBSITE LARAVEL</h3> [cite: 14]
-                [cite_start]<p>April - Juni 2025</p> [cite: 15]
-                <p>Mengembangkan situs web pemesanan kabin menggunakan Laravel. [cite_start]Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci).</p> [cite: 17]
-                [cite_start]<p>Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud.</p> [cite: 18]
-                <p>Link Proyek: <a href="[URL_PROYEK_BOOKING_CABIN]" target="_blank">Lihat Proyek</a></p>
-            </div>
+                <div class="project-item">
+                    <h3 data-lang-id="EMPLOYEE ABSENCE MOBILE APP" data-lang-en="EMPLOYEE ABSENCE MOBILE APP">EMPLOYEE ABSENCE MOBILE APP</h3>
+                    <span class="project-date" data-lang-id="Maret - April 2025" data-lang-en="March - April 2025">Maret - April 2025</span>
+                    <p data-lang-id="Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna." data-lang-en="Successfully created an employee absence mobile app for Android and iOS. Integrated with Firebase Firestore. Features include facial detection and location restriction (only absent from the office), along with other functions, ensuring the system works perfectly.">Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna.</p>
+                    <a href="https://drive.google.com/drive/folders/1SQP0ZN-suUZ6nQmAYt0qoh5Kak2E7dEU?usp=sharing" target="_blank" data-lang-id="Lihat Proyek" data-lang-en="View Project">Lihat Proyek</a>
+                </div>
 
-            <div class="project-item">
-                [cite_start]<h3>EMPLOYEE ABSENCE MOBILE APP</h3> [cite: 19]
-                [cite_start]<p>Maret - April 2025</p> [cite: 20]
-                <p>Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. [cite_start]Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna.</p> [cite: 21, 22]
-                <p>Link Proyek: <a href="[URL_PROYEK_ABSENSI_MOBILE]" target="_blank">Lihat Proyek</a></p>
-            </div>
-
-            <div class="project-item">
-                [cite_start]<h3>WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES</h3> [cite: 23]
-                [cite_start]<p>Oktober - Desember 2024</p> [cite: 24]
-                <p>Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. [cite_start]Menggunakan Forward Chaining dan Certainty Factor.</p> [cite: 25, 26]
-                <p>Link Proyek: <a href="[URL_PROYEK_SISTEM_PAKAR]" target="_blank">Lihat Proyek</a></p>
+                <div class="project-item">
+                    <h3 data-lang-id="WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES" data-lang-en="WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES">WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES</h3>
+                    <span class="project-date" data-lang-id="Oktober - Desember 2024" data-lang-en="October - December 2024">Oktober - Desember 2024</span>
+                    <p data-lang-id="Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. Menggunakan Forward Chaining dan Certainty Factor." data-lang-en="Developed a web-based expert system for broiler chicken diseases using PHP. Features user and expert login. Utilizes Forward Chaining and Certainty Factor.">Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. Menggunakan Forward Chaining dan Certainty Factor.</p>
+                    <a href="#" target="_blank" data-lang-id="Lihat Proyek (belum di deploy)" data-lang-en="View Project (not yet deployed)">Lihat Proyek (belum di deploy)</a>
+                </div>
             </div>
         </section>
 
         <section id="skills">
-            [cite_start]<h2>Keahlian</h2> [cite: 30]
-            [cite_start]<h3>Bahasa Pemrograman:</h3> [cite: 27]
-            <div class="skills-list">
-                [cite_start]<span class="skill-item">HTML</span> [cite: 31]
-                [cite_start]<span class="skill-item">CSS</span> [cite: 31]
-                [cite_start]<span class="skill-item">JavaScript</span> [cite: 31]
-                [cite_start]<span class="skill-item">PHP</span> [cite: 31]
-                [cite_start]<span class="skill-item">Dart</span> [cite: 31]
+            <h2 data-lang-id="Keahlian" data-lang-en="Skills">Keahlian</h2>
+            <div class="skills-category">
+                <h3 data-lang-id="Bahasa Pemrograman" data-lang-en="Programming Languages">Bahasa Pemrograman</h3>
+                <div class="skills-list">
+                    <span class="skill-item">HTML</span>
+                    <span class="skill-item">CSS</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">PHP</span>
+                    <span class="skill-item">Dart</span>
+                </div>
             </div>
-            <h3>Framework/Library:</h3>
-            <div class="skills-list">
-                [cite_start]<span class="skill-item">Laravel</span> [cite: 32]
-                [cite_start]<span class="skill-item">Next.JS</span> [cite: 32]
-                [cite_start]<span class="skill-item">Flutter</span> [cite: 32]
+            <div class="skills-category">
+                <h3 data-lang-id="Framework/Library" data-lang-en="Frameworks/Libraries">Framework/Library</h3>
+                <div class="skills-list">
+                    <span class="skill-item">Laravel</span>
+                    <span class="skill-item">Next.JS</span>
+                    <span class="skill-item">Flutter</span>
+                </div>
             </div>
-            <h3>Database:</h3>
-            <div class="skills-list">
-                [cite_start]<span class="skill-item">MySQL</span> [cite: 34]
-                [cite_start]<span class="skill-item">Firebase Firestore</span> [cite: 34]
-                [cite_start]<span class="skill-item">PostgreSQL</span> [cite: 34]
+            <div class="skills-category">
+                <h3 data-lang-id="Database" data-lang-en="Databases">Database</h3>
+                <div class="skills-list">
+                    <span class="skill-item">MySQL</span>
+                    <span class="skill-item">Firebase Firestore</span>
+                    <span class="skill-item">PostgreSQL</span>
+                    <span class="skill-item">Prisma ORM</span>
+                </div>
             </div>
-            <h3>Lain-lain:</h3>
-            <div class="skills-list">
-                [cite_start]<span class="skill-item">Flow Diagram</span> [cite: 33]
-                [cite_start]<span class="skill-item">Git</span> [cite: 35]
+            <div class="skills-category">
+                <h3 data-lang-id="Lain-lain" data-lang-en="Others">Lain-lain</h3>
+                <div class="skills-list">
+                    <span class="skill-item">Flow Diagram</span>
+                    <span class="skill-item">Git</span>
+                </div>
             </div>
         </section>
 
         <section id="soft-skills">
-            [cite_start]<h2>Soft Skill</h2> [cite: 36]
+            <h2 data-lang-id="Soft Skill" data-lang-en="Soft Skills">Soft Skill</h2>
             <ul>
-                [cite_start]<li>Kerja Sama Tim yang Baik</li> [cite: 37]
-                [cite_start]<li>Berpikir Kritis & Pemecahan Masalah</li> [cite: 38]
+                <li data-lang-id="Kerja Sama Tim yang Baik" data-lang-en="Good Teamwork">Kerja Sama Tim yang Baik</li>
+                <li data-lang-id="Berpikir Kritis & Pemecahan Masalah" data-lang-en="Critical Thinking & Problem Solving">Berpikir Kritis & Pemecahan Masalah</li>
             </ul>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi.</p>
+        <p data-lang-id="&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi." data-lang-en="&copy; 2025 Muhammad Nur Fauzan. All Rights Reserved.">&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi.</p>
     </footer>
+
+    <script>
+        // Animasi fade-in saat scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // JavaScript untuk fungsi terjemahan
+            const translateButton = document.getElementById('translateButton');
+            const htmlTag = document.getElementById('portfolio-html');
+            let isEnglish = false; // Status awal: Bahasa Indonesia
+
+            const translateText = () => {
+                const elementsToTranslate = document.querySelectorAll('[data-lang-id], [data-lang-en]');
+                
+                elementsToTranslate.forEach(element => {
+                    if (isEnglish) {
+                        // Ganti ke Bahasa Inggris
+                        if (element.dataset.langEn) {
+                            element.textContent = element.dataset.langEn;
+                        }
+                    } else {
+                        // Ganti ke Bahasa Indonesia
+                        if (element.dataset.langId) {
+                            element.textContent = element.dataset.langId;
+                        }
+                    }
+                });
+
+                // Update teks tombol
+                translateButton.textContent = isEnglish ? "Indonesia" : "English";
+                // Update atribut lang pada tag html
+                htmlTag.setAttribute('lang', isEnglish ? 'en' : 'id');
+
+                // Toggle status bahasa
+                isEnglish = !isEnglish;
+            };
+
+            // Event listener untuk tombol translate
+            translateButton.addEventListener('click', translateText);
+        });
+    </script>
 </body>
 </html>
