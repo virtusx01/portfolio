@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio - Muhammad Nur Fauzan</title>
+    <title>Portofolio 3D - Muhammad Nur Fauzan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Variabel CSS untuk kemudahan perubahan tema monokrom */
+        /* Variabel CSS untuk tema gelap dengan efek 3D */
         :root {
-            --primary-text: #212121;
-            --secondary-text: #555555;
-            --background-light: #f5f5f5;
-            --background-dark: #1a1a1a;
-            --card-background: #ffffff;
-            --border-color: #e0e0e0;
-            --accent-line: #9e9e9e; /* Sedikit aksen abu-abu */
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(0, 0, 0, 0.2);
+            --primary-text: #f0f0f0; /* Teks terang */
+            --secondary-text: #a0a0a0; /* Teks abu-abu terang */
+            --background-dark: #121212; /* Latar belakang utama yang sangat gelap */
+            --accent-color: #00ffff; /* Aksen warna cyan untuk nuansa futuristik */
+            --glass-bg: rgba(25, 29, 35, 0.6); /* Latar belakang kaca buram */
+            --glass-border: rgba(255, 255, 255, 0.15); /* Border tipis untuk kaca */
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-hover: rgba(0, 0, 0, 0.5);
         }
 
         /* Gaya Dasar */
@@ -27,9 +26,25 @@
             line-height: 1.7;
             margin: 0;
             padding: 0;
-            background-color: var(--background-light);
+            background-color: var(--background-dark);
             color: var(--primary-text);
             overflow-x: hidden;
+        }
+
+        /* Canvas 3D sebagai latar belakang utama */
+        #three-js-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Pastikan canvas di belakang semua konten */
+            display: block;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
         }
 
         .container {
@@ -41,31 +56,16 @@
 
         /* Header / Hero Section */
         header {
-            background-color: var(--background-dark);
-            color: var(--background-light);
-            padding: 80px 0 60px;
+            color: var(--primary-text);
+            height: 100vh; /* Tinggi header seukuran layar */
             text-align: center;
             position: relative;
-            overflow: hidden;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Pastikan header memiliki z-index agar konten di atas canvas */
-            z-index: 1; 
-        }
-
-        /* Canvas untuk animasi 3D */
-        #three-js-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; /* Pastikan canvas di belakang konten header */
-            display: block;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .profile-img {
@@ -73,11 +73,11 @@
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid var(--background-light);
+            border: 4px solid var(--accent-color);
             margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
             animation: fadeInScale 1s ease-out;
-            position: relative; /* Pastikan gambar profil di atas canvas */
+            position: relative;
             z-index: 2;
         }
 
@@ -86,10 +86,9 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 3.5em;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             animation: fadeInDown 1s ease-out;
-            position: relative; /* Pastikan teks di atas canvas */
-            z-index: 2;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         }
 
         header p {
@@ -98,55 +97,80 @@
             font-weight: 300;
             opacity: 0.9;
             animation: fadeInUp 1.2s ease-out;
-            position: relative; /* Pastikan teks di atas canvas */
-            z-index: 2;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
         }
+        
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-text);
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
 
         /* Tombol Translate */
         .translate-button-container {
-            position: absolute;
+            position: fixed; /* Tombol tetap di posisi saat scroll */
             top: 20px;
             right: 20px;
-            z-index: 10; /* Pastikan tombol di atas semua elemen */
+            z-index: 1000;
         }
 
         .translate-button {
-            background-color: var(--background-light);
+            background-color: var(--glass-bg);
             color: var(--primary-text);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .translate-button:hover {
-            background-color: var(--primary-text);
-            color: var(--background-light);
+            background-color: var(--accent-color);
+            color: var(--background-dark);
             transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent-color);
         }
 
-        /* Bagian Umum (Section) */
+        /* Bagian Umum (Section) dengan Efek Kaca */
         section {
-            padding: 60px 0;
-            margin-bottom: 30px;
-            background: var(--card-background);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            transition: transform 0.3s ease-in-out;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            background: var(--glass-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 var(--shadow-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease-in-out, opacity 1s ease-in-out;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
 
         section.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        section:last-of-type {
-            margin-bottom: 0;
         }
 
         h2 {
@@ -155,20 +179,21 @@
             font-size: 2.5em;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             position: relative;
         }
 
         h2::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background-color: var(--accent-line);
+            background-color: var(--accent-color);
             border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-color);
         }
 
         /* About Section */
@@ -183,6 +208,7 @@
         .contact-info {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 30px;
             margin-top: 30px;
         }
@@ -194,10 +220,11 @@
             align-items: center;
             gap: 10px;
             color: var(--primary-text);
-            word-break: break-all; 
+            word-break: break-all;
         }
         .contact-info p strong {
             color: var(--secondary-text);
+            font-weight: 400;
         }
 
         /* Education Section */
@@ -209,18 +236,17 @@
         }
 
         #education ul li {
-            background: var(--background-light);
+            background: rgba(0,0,0,0.2);
             padding: 20px 30px;
             border-radius: 8px;
             margin-bottom: 15px;
-            border-left: 5px solid var(--accent-line);
+            border-left: 5px solid var(--accent-color);
             transition: all 0.3s ease;
-            color: var(--primary-text);
         }
 
         #education ul li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
         }
 
         #education ul li strong {
@@ -228,34 +254,27 @@
             font-size: 1.2em;
         }
 
-        #education ul li br {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        /* Project Experience */
+        /* Project Experience dengan Efek 3D Hover */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            padding: 0 20px;
         }
 
         .project-item {
-            background: var(--background-light);
+            background: rgba(0,0,0,0.25);
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            color: var(--primary-text);
+            transform-style: preserve-3d;
         }
 
         .project-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px var(--shadow-hover);
+            transform: perspective(1000px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 10px 40px var(--shadow-hover);
+            background: rgba(0,0,0,0.4);
         }
 
         .project-item h3 {
@@ -281,20 +300,21 @@
 
         .project-item a {
             display: inline-block;
-            background-color: var(--primary-text); /* Tombol gelap */
-            color: var(--background-light); /* Teks terang */
+            background-color: var(--accent-color);
+            color: var(--background-dark);
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 700;
+            transition: all 0.3s ease;
             margin-top: 10px;
             align-self: flex-start;
         }
 
         .project-item a:hover {
-            background-color: var(--secondary-text);
-            transform: translateY(-2px);
+            background-color: #fff;
+            box-shadow: 0 0 15px #fff;
+            transform: translateZ(20px);
         }
 
         /* Skills Section */
@@ -306,7 +326,7 @@
             font-size: 1.8em;
             color: var(--primary-text);
             font-family: 'Montserrat', sans-serif;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--glass-border);
             padding-bottom: 10px;
             margin-bottom: 20px;
             text-align: center;
@@ -320,21 +340,21 @@
         }
 
         .skill-item {
-            background: var(--border-color);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             color: var(--primary-text);
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: 500;
             font-size: 0.95em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
 
         .skill-item:hover {
-            background-color: var(--secondary-text);
-            color: var(--background-light);
+            background-color: var(--accent-color);
+            color: var(--background-dark);
             transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 10px rgba(0, 255, 255, 0.2);
         }
 
         /* Soft Skills Section */
@@ -348,269 +368,174 @@
         }
 
         #soft-skills ul li {
-            background: var(--background-light);
+            background: var(--glass-bg);
             padding: 15px 25px;
             border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             font-size: 1.1em;
             font-weight: 500;
             color: var(--primary-text);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             transition: all 0.3s ease;
         }
 
         #soft-skills ul li:hover {
-            background-color: var(--primary-text);
-            color: var(--background-light);
+            background-color: var(--accent-color);
+            color: var(--background-dark);
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px var(--shadow-hover);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 30px;
-            background: var(--background-dark);
-            color: var(--background-light);
+            padding: 40px;
+            background: transparent;
+            color: var(--secondary-text);
             margin-top: 50px;
             font-size: 0.9em;
-            border-top-left-radius: 50px;
-            border-top-right-radius: 50px;
+            position: relative;
+            z-index: 2;
         }
 
         /* Responsiveness */
         @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 20px 0;
-            }
-
-            header {
-                padding: 60px 0 40px;
-            }
-
-            header h1 {
-                font-size: 2.5em;
-            }
-
-            header p {
-                font-size: 1.2em;
-            }
-
-            h2 {
-                font-size: 2em;
-                margin-bottom: 30px;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr;
-                padding: 0 15px;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                gap: 15px;
-            }
+            header h1 { font-size: 2.5em; }
+            header p { font-size: 1.2em; }
+            h2 { font-size: 2em; }
+            section { padding: 40px 20px; }
+            .project-grid { grid-template-columns: 1fr; }
+            .contact-info { flex-direction: column; gap: 15px; }
         }
 
         @media (max-width: 480px) {
-            header h1 {
-                font-size: 2em;
-            }
-
-            header p {
-                font-size: 1em;
-            }
-
-            .profile-img {
-                width: 120px;
-                height: 120px;
-            }
-
-            section {
-                padding: 30px 15px;
-            }
-
-            .skills-list {
-                justify-content: flex-start;
-            }
-
-            .skill-item {
-                padding: 8px 15px;
-                font-size: 0.9em;
-            }
+            header h1 { font-size: 2em; }
+            header p { font-size: 1em; }
+            .profile-img { width: 120px; height: 120px; }
         }
 
         /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
-    <header>
-        <canvas id="three-js-canvas"></canvas> <!-- Canvas untuk animasi 3D -->
-        <div class="translate-button-container">
-            <button id="translateButton" class="translate-button">English</button>
-        </div>
-        <div class="container">
-            <img src="https://placehold.co/150x150/cccccc/333333?text=Profile" alt="Muhammad Nur Fauzan Profile Picture" class="profile-img">
-            <h1>MUHAMMAD NUR FAUZAN</h1>
-            <p data-lang-id="JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER" data-lang-en="JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER">JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER</p>
-        </div>
-    </header>
+    <!-- Canvas untuk animasi 3D akan berada di sini, di belakang semua konten -->
+    <canvas id="three-js-canvas"></canvas>
 
-    <div class="container">
-        <section id="about">
-            <h2 data-lang-id="Tentang Saya" data-lang-en="About Me">Tentang Saya</h2>
-            <p data-lang-id="Saya adalah seorang individu yang gigih dan berdedikasi. Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dan pengalaman dalam pengembangan aplikasi seluler dan web." data-lang-en="I am a driven and dedicated individual. Born in Jakarta on July 15, 2002. With an educational background in Information Technology, I have a strong interest and experience in full-stack website and mobile development.">Saya adalah seorang individu yang gigih dan berdedikasi. Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dan pengalaman dalam pengembangan aplikasi seluler dan web.</p>
-            <div class="contact-info">
-                <p><strong>Email:</strong> muhammadnurfauzann88@gmail.com</p>
-                <p><strong>Telepon:</strong> +6281574422949</p>
-                <br>
-                <p><strong>Github:</strong> github.com/virtusx01</p>
-                <p><strong>Linkedin:</strong> linkedin.com/in/mnfauzan</p>
-            </div>
-        </section>
-
-        <section id="education">
-            <h2 data-lang-id="Pendidikan" data-lang-en="Education">Pendidikan</h2>
-            <ul>
-                <li>
-                    <strong>UNIVERSITAS BINA SARANA INFORMATIKA</strong> (2022 - sekarang)
-                    <br><span data-lang-id="Sarjana Teknologi Informasi (GPA: 4/4)" data-lang-en="Bachelor of Information Technology (GPA: 4/4)">Sarjana Teknologi Informasi (GPA: 4/4)</span>
-                </li>
-                <li>
-                    <strong>SMAN 31 JAKARTA</strong> (2018-2021)
-                </li>
-                <li>
-                    <strong>SMPN 74 JAKARTA</strong> (2015-2018)
-                </li>
-                <li>
-                    <strong>SDN 09 RAWAMANGUN</strong> (2009-2015)
-                </li>
-            </ul>
-        </section>
-
-        <section id="experience">
-            <h2 data-lang-id="Pengalaman Proyek" data-lang-en="Project Experience">Pengalaman Proyek</h2>
-            <div class="project-grid">
-                <div class="project-item">
-                    <h3 data-lang-id="BOOKING CABIN WEBSITE LARAVEL" data-lang-en="BOOKING CABIN WEBSITE LARAVEL">BOOKING CABIN WEBSITE LARAVEL</h3>
-                    <span class="project-date" data-lang-id="April - Juni 2025" data-lang-en="April - June 2025">April - Juni 2025</span>
-                    <p data-lang-id="Mengembangkan situs web pemesanan kabin menggunakan Laravel. Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, dan sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci). Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud." data-lang-en="Developed a cabin booking website using Laravel. Implemented features such as user authentication system, cabin gallery, availability checking, booking form, Midtrans as a payment API, and a QR-code system for confirmation to employees (key handover). The project uses Git for version control and is hosted on Laravel Cloud.">Mengembangkan situs web pemesanan kabin menggunakan Laravel. Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, dan sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci). Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud.</p>
-                    <a href="https://cabinskuy-web-main-afr568.laravel.cloud" target="_blank" data-lang-id="Lihat Proyek" data-lang-en="View Project">Lihat Proyek</a>
-                </div>
-
-                <div class="project-item">
-                    <h3 data-lang-id="EMPLOYEE ABSENCE MOBILE APP" data-lang-en="EMPLOYEE ABSENCE MOBILE APP">EMPLOYEE ABSENCE MOBILE APP</h3>
-                    <span class="project-date" data-lang-id="Maret - April 2025" data-lang-en="March - April 2025">Maret - April 2025</span>
-                    <p data-lang-id="Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna." data-lang-en="Successfully created an employee absence mobile app for Android and iOS. Integrated with Firebase Firestore. Features include facial detection and location restriction (only absent from the office), along with other functions, ensuring the system works perfectly.">Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna.</p>
-                    <a href="https://drive.google.com/drive/folders/1SQP0ZN-suUZ6nQmAYt0qoh5Kak2E7dEU?usp=sharing" target="_blank" data-lang-id="Lihat Proyek" data-lang-en="View Project">Lihat Proyek</a>
-                </div>
-
-                <div class="project-item">
-                    <h3 data-lang-id="WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES" data-lang-en="WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES">WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES</h3>
-                    <span class="project-date" data-lang-id="Oktober - Desember 2024" data-lang-en="October - December 2024">Oktober - Desember 2024</span>
-                    <p data-lang-id="Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. Menggunakan Forward Chaining dan Certainty Factor." data-lang-en="Developed a web-based expert system for broiler chicken diseases using PHP. Features user and expert login. Utilizes Forward Chaining and Certainty Factor.">Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. Menggunakan Forward Chaining dan Certainty Factor.</p>
-                    <a href="#" target="_blank" data-lang-id="Lihat Proyek (belum di deploy)" data-lang-en="View Project (not yet deployed)">Lihat Proyek (belum di deploy)</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills">
-            <h2 data-lang-id="Keahlian" data-lang-en="Skills">Keahlian</h2>
-            <div class="skills-category">
-                <h3 data-lang-id="Bahasa Pemrograman" data-lang-en="Programming Languages">Bahasa Pemrograman</h3>
-                <div class="skills-list">
-                    <span class="skill-item">HTML</span>
-                    <span class="skill-item">CSS</span>
-                    <span class="skill-item">JavaScript</span>
-                    <span class="skill-item">PHP</span>
-                    <span class="skill-item">Dart</span>
-                </div>
-            </div>
-            <div class="skills-category">
-                <h3 data-lang-id="Framework/Library" data-lang-en="Frameworks/Libraries">Framework/Library</h3>
-                <div class="skills-list">
-                    <span class="skill-item">Laravel</span>
-                    <span class="skill-item">Next.JS</span>
-                    <span class="skill-item">Flutter</span>
-                </div>
-            </div>
-            <div class="skills-category">
-                <h3 data-lang-id="Database" data-lang-en="Databases">Database</h3>
-                <div class="skills-list">
-                    <span class="skill-item">MySQL</span>
-                    <span class="skill-item">Firebase Firestore</span>
-                    <span class="skill-item">PostgreSQL</span>
-                    <span class="skill-item">Prisma ORM</span>
-                </div>
-            </div>
-            <div class="skills-category">
-                <h3 data-lang-id="Lain-lain" data-lang-en="Others">Lain-lain</h3>
-                <div class="skills-list">
-                    <span class="skill-item">Flow Diagram</span>
-                    <span class="skill-item">Git</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="soft-skills">
-            <h2 data-lang-id="Soft Skill" data-lang-en="Soft Skills">Soft Skill</h2>
-            <ul>
-                <li data-lang-id="Kerja Sama Tim yang Baik" data-lang-en="Good Teamwork">Kerja Sama Tim yang Baik</li>
-                <li data-lang-id="Berpikir Kritis & Pemecahan Masalah" data-lang-en="Critical Thinking & Problem Solving">Berpikir Kritis & Pemecahan Masalah</li>
-            </ul>
-        </section>
+    <!-- Tombol Translate -->
+    <div class="translate-button-container">
+        <button id="translateButton" class="translate-button">English</button>
     </div>
 
-    <footer>
-        <p data-lang-id="&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi." data-lang-en="&copy; 2025 Muhammad Nur Fauzan. All Rights Reserved.">&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi.</p>
-    </footer>
+    <!-- Wrapper untuk semua konten yang bisa di-scroll -->
+    <div class="content-wrapper">
+        <header>
+            <img src="profile.webp" alt="Muhammad Nur Fauzan Profile Picture" class="profile-img">
+            <h1>MUHAMMAD NUR FAUZAN</h1>
+            <p data-lang-id="JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER" data-lang-en="JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER">JUNIOR FULL-STACK WEBSITE & MOBILE DEVELOPER</p>
+            <div class="scroll-down-indicator">Scroll Down</div>
+        </header>
+
+        <div class="container">
+            <section id="about">
+                <h2 data-lang-id="Tentang Saya" data-lang-en="About Me">Tentang Saya</h2>
+                <p data-lang-id="Saya adalah seorang individu yang gigih dan berdedikasi. Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dan pengalaman dalam pengembangan aplikasi seluler dan web." data-lang-en="I am a driven and dedicated individual. Born in Jakarta on July 15, 2002. With an educational background in Information Technology, I have a strong interest and experience in full-stack website and mobile development.">Saya adalah seorang individu yang gigih dan berdedikasi. Lahir di Jakarta pada 15 Juli 2002. Dengan latar belakang pendidikan di bidang Teknologi Informasi, saya memiliki minat yang kuat dan pengalaman dalam pengembangan aplikasi seluler dan web.</p>
+                <div class="contact-info">
+                    <p><strong>Email:</strong> muhammadnurfauzann88@gmail.com</p>
+                    <p><strong>Telepon:</strong> +6281574422949</p>
+                    <p><strong>Github:</strong> github.com/virtusx01</p>
+                    <p><strong>Linkedin:</strong> linkedin.com/in/mnfauzan</p>
+                </div>
+            </section>
+
+            <section id="education">
+                <h2 data-lang-id="Pendidikan" data-lang-en="Education">Pendidikan</h2>
+                <ul>
+                    <li>
+                        <strong>UNIVERSITAS BINA SARANA INFORMATIKA</strong> (2022 - sekarang)
+                        <br><span data-lang-id="Sarjana Teknologi Informasi (GPA: 4/4)" data-lang-en="Bachelor of Information Technology (GPA: 4/4)">Sarjana Teknologi Informasi (GPA: 4/4)</span>
+                    </li>
+                    <li><strong>SMAN 31 JAKARTA</strong> (2018-2021)</li>
+                    <li><strong>SMPN 74 JAKARTA</strong> (2015-2018)</li>
+                    <li><strong>SDN 09 RAWAMANGUN</strong> (2009-2015)</li>
+                </ul>
+            </section>
+
+            <section id="experience">
+                <h2 data-lang-id="Pengalaman Proyek" data-lang-en="Project Experience">Pengalaman Proyek</h2>
+                <div class="project-grid">
+                    <div class="project-item">
+                        <h3 data-lang-id="BOOKING CABIN WEBSITE LARAVEL" data-lang-en="BOOKING CABIN WEBSITE LARAVEL">BOOKING CABIN WEBSITE LARAVEL</h3>
+                        <span class="project-date" data-lang-id="April - Juni 2025" data-lang-en="April - June 2025">April - Juni 2025</span>
+                        <p data-lang-id="Mengembangkan situs web pemesanan kabin menggunakan Laravel. Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, dan sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci). Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud." data-lang-en="Developed a cabin booking website using Laravel. Implemented features such as user authentication system, cabin gallery, availability checking, booking form, Midtrans as a payment API, and a QR-code system for confirmation to employees (key handover). The project uses Git for version control and is hosted on Laravel Cloud.">Mengembangkan situs web pemesanan kabin menggunakan Laravel. Mengimplementasikan fitur seperti sistem otentikasi pengguna, galeri kabin, pengecekan ketersediaan, formulir pemesanan, Midtrans sebagai API pembayaran, dan sistem QR-code untuk konfirmasi kepada karyawan (pemberian kunci). Proyek ini menggunakan Git untuk kontrol versi dan di-hosting di Laravel Cloud.</p>
+                        <a href="https://cabinskuy-web-main-afr568.laravel.cloud" target="_blank" data-lang-id="Lihat Proyek" data-lang-en="View Project">Lihat Proyek</a>
+                    </div>
+                    <div class="project-item">
+                        <h3 data-lang-id="EMPLOYEE ABSENCE MOBILE APP" data-lang-en="EMPLOYEE ABSENCE MOBILE APP">EMPLOYEE ABSENCE MOBILE APP</h3>
+                        <span class="project-date" data-lang-id="Maret - April 2025" data-lang-en="March - April 2025">Maret - April 2025</span>
+                        <p data-lang-id="Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna." data-lang-en="Successfully created an employee absence mobile app for Android and iOS. Integrated with Firebase Firestore. Features include facial detection and location restriction (only absent from the office), along with other functions, ensuring the system works perfectly.">Berhasil membuat aplikasi seluler absensi karyawan di Android dan iOS. Terintegrasi dengan Firebase Firestore. Dilengkapi dengan deteksi wajah dan pembatasan lokasi (hanya absen dari kantor), serta fungsi lainnya, sehingga sistem dapat bekerja dengan sempurna.</p>
+                        <a href="https://drive.google.com/drive/folders/1SQP0ZN-suUZ6nQmAYt0qoh5Kak2E7dEU?usp=sharing" target="_blank" data-lang-id="Lihat Proyek" data-lang-en="View Project">Lihat Proyek</a>
+                    </div>
+                    <div class="project-item">
+                        <h3 data-lang-id="WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES" data-lang-en="WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES">WEB-BASED EXPERT SYSTEM FOR BROILER CHICKEN DISEASES</h3>
+                        <span class="project-date" data-lang-id="Oktober - Desember 2024" data-lang-en="October - December 2024">Oktober - Desember 2024</span>
+                        <p data-lang-id="Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. Menggunakan Forward Chaining dan Certainty Factor." data-lang-en="Developed a web-based expert system for broiler chicken diseases using PHP. Features user and expert login. Utilizes Forward Chaining and Certainty Factor.">Mengembangkan sistem pakar berbasis web untuk penyakit ayam broiler menggunakan PHP. Memiliki login pengguna dan pakar. Menggunakan Forward Chaining dan Certainty Factor.</p>
+                        <a href="#" target="_blank" data-lang-id="Lihat Proyek (belum di deploy)" data-lang-en="View Project (not yet deployed)">Lihat Proyek (belum di deploy)</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills">
+                <h2 data-lang-id="Keahlian" data-lang-en="Skills">Keahlian</h2>
+                <div class="skills-category">
+                    <h3 data-lang-id="Bahasa Pemrograman" data-lang-en="Programming Languages">Bahasa Pemrograman</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">HTML</span> <span class="skill-item">CSS</span> <span class="skill-item">JavaScript</span> <span class="skill-item">PHP</span> <span class="skill-item">Dart</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3 data-lang-id="Framework/Library" data-lang-en="Frameworks/Libraries">Framework/Library</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Laravel</span> <span class="skill-item">Next.JS</span> <span class="skill-item">Flutter</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3 data-lang-id="Database" data-lang-en="Databases">Database</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">MySQL</span> <span class="skill-item">Firebase Firestore</span> <span class="skill-item">PostgreSQL</span> <span class="skill-item">Prisma ORM</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3 data-lang-id="Lain-lain" data-lang-en="Others">Lain-lain</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Flow Diagram</span> <span class="skill-item">Git</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="soft-skills">
+                <h2 data-lang-id="Soft Skill" data-lang-en="Soft Skills">Soft Skill</h2>
+                <ul>
+                    <li data-lang-id="Kerja Sama Tim yang Baik" data-lang-en="Good Teamwork">Kerja Sama Tim yang Baik</li>
+                    <li data-lang-id="Berpikir Kritis & Pemecahan Masalah" data-lang-en="Critical Thinking & Problem Solving">Berpikir Kritis & Pemecahan Masalah</li>
+                </ul>
+            </section>
+        </div>
+
+        <footer>
+            <p data-lang-id="&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi." data-lang-en="&copy; 2025 Muhammad Nur Fauzan. All Rights Reserved.">&copy; 2025 Muhammad Nur Fauzan. Hak Cipta Dilindungi.</p>
+        </footer>
+    </div>
 
     <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Animasi fade-in saat scroll
+        // --- Inisialisasi Umum ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Animasi fade-in saat scroll
             const sections = document.querySelectorAll('section');
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -619,180 +544,116 @@
                     }
                 });
             }, observerOptions);
+            sections.forEach(section => observer.observe(section));
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // JavaScript untuk fungsi terjemahan
+            // Fungsi terjemahan
             const translateButton = document.getElementById('translateButton');
             const htmlTag = document.getElementById('portfolio-html');
-            let isEnglish = false; // Status awal: Bahasa Indonesia
-
+            let isEnglish = false;
             const translateText = () => {
+                isEnglish = !isEnglish; // Toggle status bahasa dulu
                 const elementsToTranslate = document.querySelectorAll('[data-lang-id], [data-lang-en]');
-                
                 elementsToTranslate.forEach(element => {
-                    if (isEnglish) {
-                        // Ganti ke Bahasa Inggris
-                        if (element.dataset.langEn) {
-                            element.textContent = element.dataset.langEn;
-                        }
-                    } else {
-                        // Ganti ke Bahasa Indonesia
-                        if (element.dataset.langId) {
-                            element.textContent = element.dataset.langId;
-                        }
-                    }
+                    const text = isEnglish ? element.dataset.langEn : element.dataset.langId;
+                    if (text) element.textContent = text;
                 });
-
-                // Update teks tombol
                 translateButton.textContent = isEnglish ? "Indonesia" : "English";
-                // Update atribut lang pada tag html
                 htmlTag.setAttribute('lang', isEnglish ? 'en' : 'id');
-
-                // Toggle status bahasa
-                isEnglish = !isEnglish;
             };
-
-            // Event listener untuk tombol translate
             translateButton.addEventListener('click', translateText);
         });
 
-        // Three.js Animation
-        let scene, camera, renderer, particles, mouseX = 0, mouseY = 0;
-        let windowHalfX = window.innerWidth / 2;
-        let windowHalfY = window.innerHeight / 2;
+        // --- Three.js Animation ---
+        let scene, camera, renderer, mainObject, lights, mouseX = 0, mouseY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
 
         function initThreeJS() {
             const canvas = document.getElementById('three-js-canvas');
-            const header = document.querySelector('header');
-
+            
             // Scene
             scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x121212, 0.05); // Fog untuk efek kedalaman
 
             // Camera
-            camera = new THREE.PerspectiveCamera(75, header.clientWidth / header.clientHeight, 0.1, 1000);
-            camera.position.z = 5;
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 15;
 
             // Renderer
             renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-            renderer.setSize(header.clientWidth, header.clientHeight);
+            renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
-            // header.appendChild(renderer.domElement); // Canvas already exists in HTML
 
-            // Particles
-            const particleCount = 1000;
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            const sizes = new Float32Array(particleCount);
+            // Lights
+            lights = {};
+            lights.ambient = new THREE.AmbientLight(0xffffff, 0.1);
+            scene.add(lights.ambient);
 
-            const color = new THREE.Color();
+            lights.point1 = new THREE.PointLight(0x00ffff, 1.5, 100);
+            lights.point1.position.set(10, 10, 10);
+            scene.add(lights.point1);
+            
+            lights.point2 = new THREE.PointLight(0xff00ff, 1.5, 100);
+            lights.point2.position.set(-10, -10, 10);
+            scene.add(lights.point2);
 
-            for (let i = 0; i < particleCount; i++) {
-                // Positions
-                positions[i * 3] = (Math.random() * 2 - 1) * 10; // x
-                positions[i * 3 + 1] = (Math.random() * 2 - 1) * 10; // y
-                positions[i * 3 + 2] = (Math.random() * 2 - 1) * 10; // z
-
-                // Colors (monochrome shades)
-                const grey = Math.random() * 0.5 + 0.5; // From 0.5 to 1.0 for lighter greys
-                color.setRGB(grey, grey, grey);
-                colors[i * 3] = color.r;
-                colors[i * 3 + 1] = color.g;
-                colors[i * 3 + 2] = color.b;
-
-                // Sizes
-                sizes[i] = Math.random() * 0.5 + 0.1; // Small varying sizes
-            }
-
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-            // Shader Material for custom particle rendering (size and color)
-            const material = new THREE.ShaderMaterial({
-                uniforms: {
-                    pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png') }
-                },
-                vertexShader: `
-                    attribute float size;
-                    attribute vec3 color;
-                    varying vec3 vColor;
-                    void main() {
-                        vColor = color;
-                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                        gl_PointSize = size * (300.0 / -mvPosition.z);
-                        gl_Position = projectionMatrix * mvPosition;
-                    }
-                `,
-                fragmentShader: `
-                    varying vec3 vColor;
-                    uniform sampler2D pointTexture;
-                    void main() {
-                        gl_FragColor = vec4(vColor, 1.0);
-                        gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
-                    }
-                `,
-                blending: THREE.AdditiveBlending,
-                depthTest: false,
-                transparent: true
+            // Main 3D Object (Icosahedron)
+            const geometry = new THREE.IcosahedronGeometry(5, 1); // Bentuk geometris kompleks
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xcccccc,
+                wireframe: true, // Tampilan wireframe yang modern
+                metalness: 0.3,
+                roughness: 0.5,
             });
-
-            particles = new THREE.Points(geometry, material);
-            scene.add(particles);
-
-            // Mouse interaction for camera movement
+            mainObject = new THREE.Mesh(geometry, material);
+            scene.add(mainObject);
+            
+            // Event Listeners
             document.addEventListener('mousemove', onDocumentMouseMove, false);
             window.addEventListener('resize', onWindowResize, false);
         }
 
         function onDocumentMouseMove(event) {
-            mouseX = (event.clientX - windowHalfX) * 0.001;
-            mouseY = (event.clientY - windowHalfY) * 0.001;
+            mouseX = (event.clientX - windowHalfX) / 5; // Mengurangi sensitivitas
+            mouseY = (event.clientY - windowHalfY) / 5;
         }
 
         function onWindowResize() {
-            const header = document.querySelector('header');
-            const canvas = document.getElementById('three-js-canvas');
-            
-            // Update canvas size
-            canvas.width = header.clientWidth;
-            canvas.height = header.clientHeight;
-
-            // Update camera aspect ratio
-            camera.aspect = header.clientWidth / header.clientHeight;
+            camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-
-            // Update renderer size
-            renderer.setSize(header.clientWidth, header.clientHeight);
-            windowHalfX = window.innerWidth / 2;
-            windowHalfY = window.innerHeight / 2;
+            renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
         function animate() {
             requestAnimationFrame(animate);
 
-            // Animate particles
-            if (particles) {
-                particles.rotation.x += 0.0005;
-                particles.rotation.y += 0.001;
+            const time = Date.now() * 0.0005;
+
+            // Animasi objek utama
+            if (mainObject) {
+                mainObject.rotation.x += 0.001;
+                mainObject.rotation.y += 0.0015;
+            }
+            
+            // Animasi lampu
+            if(lights.point1 && lights.point2) {
+                lights.point1.position.x = Math.sin(time * 0.7) * 15;
+                lights.point1.position.y = Math.cos(time * 0.5) * 15;
+                lights.point2.position.x = Math.cos(time * 0.3) * -15;
+                lights.point2.position.y = Math.sin(time * 0.5) * -15;
             }
 
-            // Subtle camera movement based on mouse
-            camera.position.x += (mouseX - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            // Gerakan kamera halus berdasarkan mouse
+            camera.position.x += (mouseX - camera.position.x) * 0.01;
+            camera.position.y += (-mouseY - camera.position.y) * 0.01;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
         }
 
-        // Initialize Three.js when the window loads
-        window.onload = function() {
-            initThreeJS();
-            animate();
-        };
+        // Initialize Three.js
+        initThreeJS();
+        animate();
     </script>
 </body>
 </html>
